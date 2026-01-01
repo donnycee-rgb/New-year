@@ -1,7 +1,3 @@
-// ===================================
-// ARRAY OF PERSONALIZED NEW YEAR MESSAGES
-// ===================================
-
 const messages = [
     "Dear {name},\nAs this year closes, I hope you find yourself surrounded by warmth and the kind of peace that feels like coming home.\nMay the new year bring you moments that remind you why it's all worth it.",
     
@@ -24,54 +20,29 @@ const messages = [
     "{name}, here's what I hope for you:\nThat you laugh more easily, rest more deeply, and trust yourself more fully.\nMay the new year feel like an exhale after holding your breath for too long."
 ];
 
-// ===================================
-// GLOBAL VARIABLES
-// ===================================
-
 let userName = '';
 let countdownInterval = null;
-
-// DOM elements (will be initialized after DOM loads)
-let inputSection;
-let countdownSection;
-let transitionSection;
-let messageSection;
-let nameInput;
-let continueBtn;
-let messageContent;
-let hoursDisplay;
-let minutesDisplay;
-let secondsDisplay;
-
-// ===================================
-// FLOATING PARTICLES SYSTEM
-// ===================================
+let inputSection, countdownSection, transitionSection, messageSection;
+let nameInput, continueBtn, messageContent;
+let hoursDisplay, minutesDisplay, secondsDisplay;
 
 function createParticles() {
     const particlesContainer = document.getElementById('particles-container');
     
-    // Safety check
     if (!particlesContainer) {
         console.error('Particles container not found');
         return;
     }
     
-    const particleCount = 30; // Number of particles
+    const particleCount = 30;
     
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
-        
-        // Random horizontal position
         particle.style.left = Math.random() * 100 + '%';
-        
-        // Random animation delay for staggered effect
         particle.style.animationDelay = Math.random() * 15 + 's';
-        
-        // Random horizontal drift
         particle.style.setProperty('--drift', (Math.random() - 0.5) * 100 + 'px');
         
-        // Slight size variation
         const size = 3 + Math.random() * 3;
         particle.style.width = size + 'px';
         particle.style.height = size + 'px';
@@ -80,131 +51,85 @@ function createParticles() {
     }
 }
 
-// ===================================
-// COUNTDOWN LOGIC
-// ===================================
-
-/**
- * Check if we're before New Year's midnight
- * Returns the target New Year date if before midnight, null if after
- */
 function getNewYearTarget() {
     const now = new Date();
-
-    // Target: January 1st, 2026 at midnight (the specific New Year this was built for)
     const newYear = new Date(2026, 0, 1, 0, 0, 0);
-
-    // If we're still before the New Year 2026, return the target
+    
     if (now < newYear) {
         return newYear;
     }
-
-    // If we're after New Year 2026, don't show countdown
+    
     return null;
 }
 
-/**
- * Update countdown timer display
- */
 function updateCountdown(targetDate) {
     const now = new Date();
     const difference = targetDate - now;
 
-    // If countdown is over
     if (difference <= 0) {
         clearInterval(countdownInterval);
         onCountdownComplete();
         return;
     }
 
-    // Calculate time remaining
     const hours = Math.floor(difference / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-    // Update display with zero-padding
     hoursDisplay.textContent = String(hours).padStart(2, '0');
     minutesDisplay.textContent = String(minutes).padStart(2, '0');
     secondsDisplay.textContent = String(seconds).padStart(2, '0');
 
-    // Update circular progress
-    updateCircularProgress('hours-progress', hours, 24); // Assuming max 24 hours for demo
+    updateCircularProgress('hours-progress', hours, 24);
     updateCircularProgress('minutes-progress', minutes, 60);
     updateCircularProgress('seconds-progress', seconds, 60);
 }
 
-/**
- * Update circular progress bar
- */
 function updateCircularProgress(elementId, value, max) {
     const progressBar = document.getElementById(elementId);
-    const circumference = 314; // 2 * PI * 50
+    const circumference = 314;
     const offset = circumference - (value / max) * circumference;
     progressBar.style.strokeDashoffset = offset;
 }
 
-/**
- * Start the countdown timer
- */
 function startCountdown(targetDate) {
-    // Trigger confetti on start
     confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 }
     });
 
-    // Initial update
     updateCountdown(targetDate);
-
-    // Update every second
+    
     countdownInterval = setInterval(() => {
         updateCountdown(targetDate);
     }, 1000);
 }
 
-/**
- * Called when countdown reaches zero
- */
 function onCountdownComplete() {
-    // Fade out countdown section
     countdownSection.classList.remove('active');
     
-    // Show transition message briefly
     setTimeout(() => {
         transitionSection.classList.add('active');
         
-        // Then show the personalized message
         setTimeout(() => {
             transitionSection.classList.remove('active');
             showPersonalizedMessage();
-        }, 3000); // Show "Welcome to the New Year" for 3 seconds
+        }, 3000);
     }, 800);
 }
-
-// ===================================
-// FUNCTION: GET RANDOM MESSAGE
-// ===================================
 
 function getRandomMessage() {
     const randomIndex = Math.floor(Math.random() * messages.length);
     return messages[randomIndex];
 }
 
-// ===================================
-// FUNCTION: PERSONALIZE MESSAGE WITH ANIMATIONS
-// ===================================
-
 function personalizeMessage(name) {
     const template = getRandomMessage();
     const personalizedMessage = template.replace(/{name}/g, name);
-    
-    // Split message into lines
     const lines = personalizedMessage.split('\n');
     
-    // Wrap each line in a div with animation class
     const formattedLines = lines.map(line => {
-        // Highlight the name
         const highlighted = line.replace(new RegExp(name, 'g'), `<span class="highlight-name">${name}</span>`);
         return `<div class="message-line">${highlighted}</div>`;
     }).join('');
@@ -212,19 +137,11 @@ function personalizeMessage(name) {
     return formattedLines;
 }
 
-// ===================================
-// FUNCTION: SHOW PERSONALIZED MESSAGE
-// ===================================
-
 function showPersonalizedMessage() {
     const personalizedMessage = personalizeMessage(userName);
     messageContent.innerHTML = personalizedMessage;
     messageSection.classList.add('active');
 }
-
-// ===================================
-// FUNCTION: HANDLE NAME SUBMISSION
-// ===================================
 
 function handleNameSubmit() {
     const name = nameInput.value.trim();
@@ -236,31 +153,21 @@ function handleNameSubmit() {
     }
     
     userName = name;
-    
-    // Fade out input section
     inputSection.classList.remove('active');
     
-    // Check if we should show countdown or go straight to message
     const newYearTarget = getNewYearTarget();
     
     setTimeout(() => {
         if (newYearTarget) {
-            // Show countdown if before New Year
             countdownSection.classList.add('active');
             startCountdown(newYearTarget);
         } else {
-            // Go straight to message if after New Year
             showPersonalizedMessage();
         }
     }, 800);
 }
 
-// ===================================
-// INITIALIZATION FUNCTION
-// ===================================
-
 function initializePage() {
-    // Get all DOM elements
     inputSection = document.getElementById('input-section');
     countdownSection = document.getElementById('countdown-section');
     transitionSection = document.getElementById('transition-section');
@@ -272,16 +179,13 @@ function initializePage() {
     minutesDisplay = document.getElementById('minutes');
     secondsDisplay = document.getElementById('seconds');
     
-    // Safety check - make sure all elements exist
     if (!inputSection || !nameInput || !continueBtn) {
         console.error('Required DOM elements not found');
         return;
     }
     
-    // Create floating particles
     createParticles();
     
-    // Set up event listeners
     continueBtn.addEventListener('click', handleNameSubmit);
     
     nameInput.addEventListener('keypress', (event) => {
@@ -290,18 +194,11 @@ function initializePage() {
         }
     });
     
-    // Focus on input field
     nameInput.focus();
 }
 
-// ===================================
-// WAIT FOR DOM TO BE FULLY LOADED
-// ===================================
-
-// Use DOMContentLoaded instead of window.load for faster initialization
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializePage);
 } else {
-    // DOM is already loaded
     initializePage();
 }

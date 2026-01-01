@@ -4,34 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy New Year</title>
-    
-    <!-- Google Fonts: Playfair Display (serif) for headings, Inter (sans-serif) for body -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-    
-    <!-- Link to external CSS file -->
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    <!-- Floating particles container (decorative background) -->
+
     <div id="particles-container"></div>
-    
-    <!-- Section 1: Name Input (visible on page load) -->
+
     <section id="input-section" class="section active">
         <div class="container">
             <h1 class="welcome-text">Before the year turns...</h1>
             <p class="subtitle">I'd like to share something with you.</p>
 
-            <!-- Decorative sparkles -->
             <div class="section-sparkles">
                 <span class="sparkle">✨</span>
                 <span class="sparkle">🎉</span>
                 <span class="sparkle">✨</span>
             </div>
 
-            <!-- Input form -->
             <div class="input-wrapper">
                 <input
                     type="text"
@@ -45,15 +39,12 @@
         </div>
     </section>
 
-    <!-- Section 2: Countdown (shown only if before midnight) -->
     <section id="countdown-section" class="section">
         <div class="container">
             <p class="countdown-intro">The new year is almost here… let's cross over together ✨</p>
 
-            <!-- Festive Text -->
-            <div class="festive-text">🎉 Happy New Year! 🥳</div>
+            </div>
 
-            <!-- Countdown timer display -->
             <div id="countdown-timer" class="countdown-timer">
                 <div class="time-unit">
                     <span id="hours" class="time-value">00</span>
@@ -85,35 +76,29 @@
         </div>
     </section>
 
-    <!-- Section 3: New Year Transition Message (shown when countdown reaches zero) -->
     <section id="transition-section" class="section">
         <div class="container">
             <h1 class="transition-text">Welcome to the New Year ✨</h1>
         </div>
     </section>
 
-    <!-- Section 4: Personalized Message (hidden initially) -->
     <section id="message-section" class="section">
         <div class="container">
-            <!-- Decorative sparkles -->
             <div class="section-sparkles">
                 <span class="sparkle">✨</span>
                 <span class="sparkle">🎉</span>
                 <span class="sparkle">✨</span>
             </div>
 
-            <!-- The personalized message will be inserted here by JavaScript -->
             <div id="message-content" class="message-content"></div>
 
-            <!-- Sender section with image -->
             <div class="sender-section">
-                <img src="brian.jpeg" alt="Denis" class="profile-image">
-                <p class="sender-text">From me, Brian — wishing you a gentle and hopeful year ahead.</p>
+                <img src="profile.jpeg" alt="Denis" class="profile-image">
+                <p class="sender-text">From me, Dennis — wishing you a gentle and hopeful year ahead.</p>
             </div>
         </div>
     </section>
 
-    <!-- Link to external JavaScript file -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.0/dist/index.min.js"></script>
     <script src="script.js"></script>
