@@ -90,17 +90,16 @@ function createParticles() {
  */
 function getNewYearTarget() {
     const now = new Date();
-    const currentYear = now.getFullYear();
 
-    // Target: January 1st of next year at midnight
-    const newYear = new Date(currentYear + 1, 0, 1, 0, 0, 0);
+    // Target: January 1st, 2026 at midnight (the specific New Year this was built for)
+    const newYear = new Date(2026, 0, 1, 0, 0, 0);
 
-    // If we're still before the New Year, return the target
+    // If we're still before the New Year 2026, return the target
     if (now < newYear) {
         return newYear;
     }
 
-    // If we're after New Year (e.g., Jan 2 or later), return null
+    // If we're after New Year 2026, don't show countdown
     return null;
 }
 
